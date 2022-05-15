@@ -1,3 +1,118 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": [
+    "airbnb-base",
+    "airbnb-typescript",
+    "plugin:unicorn/recommended",
+    "plugin:typescript-sort-keys/recommended"
+  ],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "env": {
+    "jest": true,
+    "node": true,
+    "browser": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["react", "react-hooks", "sort-destructure-keys"],
+  "overrides": [
+    {
+      "files": ["*.js", "*.ts", "*.tsx"],
+      "rules": {
+        "linebreak-style": 0,
+        "consistent-return": "off",
+        "prefer-arrow-callback": 2,
+        "operator-linebreak": "off",
+        "no-confusing-arrow": "off",
+        "no-underscore-dangle": "off",
+        "object-curly-newline": "off",
+        "no-restricted-syntax": "off",
+        "no-prototype-builtins": "off",
+        "unicorn/filename-case": "off",
+        "function-paren-newline": "off",
+        "newline-per-chained-call": "off",
+        "no-param-reassign": ["error", { "props": false }],
+        "padding-line-between-statements": [
+          "error",
+          {
+            "blankLine": "always",
+            "prev": ["const", "let", "var"],
+            "next": "*"
+          },
+          {
+            "blankLine": "any",
+            "prev": ["const", "let", "var"],
+            "next": ["const", "let", "var"]
+          },
+          { "blankLine": "always", "prev": "directive", "next": "*" },
+          { "blankLine": "any", "prev": "directive", "next": "directive" },
+          { "blankLine": "always", "prev": ["case", "default"], "next": "*" },
+          { "blankLine": "always", "prev": "if", "next": "*" }
+        ],
+        "implicit-arrow-linebreak": "off",
+        "import/order": "off",
+        "import/no-cycle": "off",
+        "import/extensions": "off",
+        "import/prefer-default-export": "off",
+        "import/no-extraneous-dependencies": "off",
+        "react/no-this-in-sfc": "off",
+        "react/jsx-curly-newline": "off",
+        "react/require-default-props": "off",
+        "react/jsx-filename-extension": "off",
+        "react/jsx-props-no-spreading": "off",
+        "react/jsx-one-expression-per-line": "off",
+        "react/jsx-wrap-multilines": [
+          "error",
+          {
+            "declaration": "parens-new-line",
+            "assignment": "parens-new-line",
+            "return": "parens-new-line",
+            "arrow": "parens-new-line",
+            "condition": "parens-new-line",
+            "logical": "parens-new-line",
+            "prop": "ignore"
+          }
+        ],
+        "react-hooks/exhaustive-deps": "off",
+        "react-hooks/rules-of-hooks": "error",
+        "unicorn/no-null": "off",
+        "unicorn/prefer-module": "off",
+        "unicorn/no-array-reduce": "off",
+        "unicorn/prefer-regexp-test": "off",
+        "unicorn/no-useless-undefined": "off",
+        "unicorn/prefer-query-selector": "off",
+        "unicorn/prevent-abbreviations": "off",
+        "unicorn/prefer-array-index-of": "off",
+        "unicorn/no-array-callback-reference": "off",
+        "unicorn/no-object-as-default-parameter": "off",
+        "@typescript-eslint/indent": "off",
+        "@typescript-eslint/no-shadow": "off",
+        "@typescript-eslint/comma-dangle": "off",
+        "@typescript-eslint/no-explicit-any": "error",
+        "@typescript-eslint/padding-line-between-statements": [
+          "error",
+          {
+            "blankLine": "always",
+            "prev": ["interface", "type"],
+            "next": "*"
+          }
+        ],
+        "@typescript-eslint/naming-convention": [
+          "error",
+          {
+            "selector": "interface",
+            "format": ["PascalCase"]
+          },
+          {
+            "selector": "enum",
+            "format": ["PascalCase"]
+          }
+        ],
+        "sort-destructure-keys/sort-destructure-keys": [
+          2,
+          { "caseSensitive": false }
+        ]
+      }
+    }
+  ]
 }
