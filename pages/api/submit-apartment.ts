@@ -31,6 +31,7 @@ export default async function handler(req: ExtendedNextApiRequest, res: NextApiR
       locationFacilities,
       numberOfBathrooms,
       numberOfBedrooms,
+      other,
       parkingSpace,
       region,
       street,
@@ -162,6 +163,15 @@ export default async function handler(req: ExtendedNextApiRequest, res: NextApiR
             {
               text: {
                 content: contactNumber,
+              },
+            },
+          ],
+        },
+        Other: {
+          rich_text: [
+            {
+              text: {
+                content: other || '',
               },
             },
           ],

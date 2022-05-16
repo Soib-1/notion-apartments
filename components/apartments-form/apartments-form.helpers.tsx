@@ -101,7 +101,8 @@ export const parkingSpaceOptions = [
 ];
 
 export const apartmentSchema = yup.object().shape({
-  city: yup.string().required('Pole wymagane'),
+  other: yup.string(),
+  city: yup.string().required('Te pole jest wymagane!'),
   region: yup.string().required('Te pole jest wymagane!'),
   street: yup.string().required('Te pole jest wymagane!'),
   airConditioning: yup.boolean(),
@@ -158,4 +159,5 @@ export const initialValues = {
   deposit: '',
   brokerageCommission: '',
   contactNumber: '',
+  other: '',
 };

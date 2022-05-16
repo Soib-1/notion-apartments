@@ -296,6 +296,17 @@ export const ApartmentsForm = () => {
             label="Numer kontaktowy"
             helperText={touched.contactNumber && errors.contactNumber ? errors.contactNumber : ''}
           />
+          <S.Input
+            id="other"
+            name="other"
+            type="text"
+            multiline
+            rows={3}
+            onChange={handleChange}
+            placeholder="Link do oferty itp."
+            label="Inne informacje"
+            helperText={touched.other && errors.other ? errors.other : ''}
+          />
         </S.FlexGroup>
       </S.Section>
       <S.Divider />
