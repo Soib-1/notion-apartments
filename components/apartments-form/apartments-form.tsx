@@ -23,33 +23,23 @@ import {
 import * as S from './apartments-form.styles';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/router';
-import { useCallback, useEffect, useState } from 'react';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import { FocusError } from 'focus-formik-error';
 
 export const ApartmentsForm = () => {
-  const [token, setToken] = useState<string>('');
   const { executeRecaptcha } = useGoogleReCaptcha();
-
-  const handleReCaptchaVerify = useCallback(async () => {
-    if (!executeRecaptcha) {
-      console.log('Execute recaptcha not yet available');
-      return;
-    }
-
-    const token = await executeRecaptcha();
-
-    setToken(token);
-  }, []);
-
-  useEffect(() => {
-    handleReCaptchaVerify();
-  }, [handleReCaptchaVerify]);
 
   const router = useRouter();
   const formik = useFormik({
     initialValues,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
+      if (!executeRecaptcha) {
+        console.log('Execute recaptcha not yet available');
+        return;
+      }
+
+      const token = await executeRecaptcha();
+
       toast.promise(
         axios.post('/api/submit-apartment', { ...values, captcha: token }).then(() => {
           router.push('/');
@@ -102,13 +92,7 @@ export const ApartmentsForm = () => {
     ));
 
   return (
-    <S.Form
-      onSubmit={async (event) => {
-        event.preventDefault();
-        await handleReCaptchaVerify();
-        handleSubmit(event);
-      }}
-    >
+    <S.Form onSubmit={handleSubmit}>
       <FocusError formik={formik} />
       <S.Section>
         <S.Subheading variant="h4">Lokalizacja</S.Subheading>
