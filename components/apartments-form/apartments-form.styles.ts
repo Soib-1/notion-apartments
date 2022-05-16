@@ -10,7 +10,7 @@ import {
 import { styled } from '@mui/system';
 
 export const Input = styled(TextField)`
-  width: 200px;
+  width: 250px;
 `;
 
 export const Subheading = styled(Typography)`
@@ -31,7 +31,6 @@ export const Form = styled('form')`
 
 export const Section = styled(Box)`
   display: flex;
-  padding: 24px;
   width: 100%;
   justify-content: space-around;
   align-items: center;
@@ -87,7 +86,7 @@ export const OptionsContainer = styled(Paper)`
 `;
 
 export const Dropdown = styled(Select)`
-  width: 200px;
+  width: 250px;
 `;
 
 export const ButtonContainer = styled(Box)`

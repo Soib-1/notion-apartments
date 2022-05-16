@@ -23,14 +23,31 @@ import {
 import * as S from './apartments-form.styles';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
-import { GoogleReCaptcha } from 'react-google-recaptcha-v3';
+import { useCallback, useEffect, useState } from 'react';
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
+import { FocusError } from 'focus-formik-error';
 
 export const ApartmentsForm = () => {
   const [token, setToken] = useState<string>('');
+  const { executeRecaptcha } = useGoogleReCaptcha();
+
+  const handleReCaptchaVerify = useCallback(async () => {
+    if (!executeRecaptcha) {
+      console.log('Execute recaptcha not yet available');
+      return;
+    }
+
+    const token = await executeRecaptcha();
+
+    setToken(token);
+  }, []);
+
+  useEffect(() => {
+    handleReCaptchaVerify();
+  }, [handleReCaptchaVerify]);
 
   const router = useRouter();
-  const { errors, handleChange, handleSubmit, setFieldValue, touched, values } = useFormik({
+  const formik = useFormik({
     initialValues,
     onSubmit: (values) => {
       toast.promise(
@@ -46,6 +63,8 @@ export const ApartmentsForm = () => {
     },
     validationSchema: apartmentSchema,
   });
+
+  const { errors, handleChange, handleSubmit, setFieldValue, touched, values } = formik;
 
   const handleOptionsChange = (name: string, values: string[], value: string) => {
     if (values && values.includes(value)) {
@@ -83,12 +102,14 @@ export const ApartmentsForm = () => {
     ));
 
   return (
-    <S.Form onSubmit={handleSubmit}>
-      <GoogleReCaptcha
-        onVerify={(token) => {
-          setToken(token);
-        }}
-      />
+    <S.Form
+      onSubmit={async (event) => {
+        event.preventDefault();
+        await handleReCaptchaVerify();
+        handleSubmit(event);
+      }}
+    >
+      <FocusError formik={formik} />
       <S.Section>
         <S.Subheading variant="h4">Lokalizacja</S.Subheading>
         <S.FlexGroup>
@@ -115,7 +136,7 @@ export const ApartmentsForm = () => {
             name="region"
             type="text"
             onChange={handleChange}
-            placeholder="Nazwa regionu"
+            placeholder="Region miasta"
             label="Region miasta"
             helperText={touched.region && errors.region ? errors.region : ''}
           />
@@ -141,7 +162,7 @@ export const ApartmentsForm = () => {
             name="bedSize"
             type="text"
             onChange={handleChange}
-            placeholder="King size"
+            placeholder="Np. King size, 180x200..."
             label="Wielkość łóżka"
             helperText={touched.bedSize && errors.bedSize ? errors.bedSize : ''}
           />
@@ -174,6 +195,7 @@ export const ApartmentsForm = () => {
                 defaultValue={values.bathroom}
                 labelId="bathroom"
                 name="bathroom"
+                multiple
                 onChange={handleChange}
                 label="Na wyposażeniu łazienki"
               >

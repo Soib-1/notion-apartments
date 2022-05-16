@@ -62,7 +62,7 @@ export default async function handler(req: ExtendedNextApiRequest, res: NextApiR
           title: [
             {
               text: {
-                content: 'test',
+                content: req.headers.referer || '',
               },
             },
           ],
@@ -139,9 +139,11 @@ export default async function handler(req: ExtendedNextApiRequest, res: NextApiR
           },
         },
         Bathroom: {
-          select: {
-            name: bathroom,
-          },
+          multi_select: [
+            ...(bathroom?.map((bathroom) => ({
+              name: bathroom || '',
+            })) || []),
+          ],
         },
         NumberOfBathrooms: {
           number: numberOfBathrooms,

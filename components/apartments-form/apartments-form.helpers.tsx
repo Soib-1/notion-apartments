@@ -118,15 +118,24 @@ export const apartmentSchema = yup.object().shape({
     .string()
     .required('Te pole jest wymagane!')
     .oneOf(parkingSpaceOptions.map((select) => select.value)),
-  bathroom: yup
-    .string()
-    .required('Te pole jest wymagane!')
-    .oneOf(bathroomOptions.map((select) => select.value)),
-  numberOfBathrooms: yup.number().positive().required('Te pole jest wymagane!'),
-  numberOfBedrooms: yup.number().positive().required('Te pole jest wymagane!'),
-  totalPricePerMonth: yup.number().positive().required('Te pole jest wymagane!'),
+  bathroom: yup.array(yup.string()),
+  numberOfBathrooms: yup
+    .number()
+    .moreThan(-1, 'Kwota nie powinna być niższa niż 0!')
+    .required('Te pole jest wymagane!'),
+  numberOfBedrooms: yup
+    .number()
+    .moreThan(-1, 'Kwota nie powinna być niższa niż 0!')
+    .required('Te pole jest wymagane!'),
+  totalPricePerMonth: yup
+    .number()
+    .moreThan(-1, 'Kwota nie powinna być niższa niż 0!')
+    .required('Te pole jest wymagane!'),
   deposit: yup.number().positive().required('Te pole jest wymagane!'),
-  brokerageCommission: yup.number().positive().required('Te pole jest wymagane!'),
+  brokerageCommission: yup
+    .number()
+    .moreThan(-1, 'Kwota nie powinna być niższa niż 0!')
+    .required('Te pole jest wymagane!'),
   contactNumber: yup.string().required('Te pole jest wymagane!'),
 });
 
@@ -152,7 +161,7 @@ export const initialValues = {
   additionalFacilities: [],
   internetSpeed: '0',
   parkingSpace: 'street',
-  bathroom: 'shower',
+  bathroom: [],
   numberOfBedrooms: '',
   numberOfBathrooms: '',
   totalPricePerMonth: '',
